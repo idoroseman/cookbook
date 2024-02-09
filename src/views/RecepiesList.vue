@@ -99,6 +99,7 @@
 <style>
 h1 {
   font-family: 'Amatic SC', sans-serif;
+  font-size: 3em;
 }
 .v-card-title {
     font-family: miri;

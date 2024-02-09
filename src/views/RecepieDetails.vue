@@ -12,10 +12,10 @@
           <v-card-subtitle>
             <v-chip v-for="item in recepie.keywords" :key="item" variant="flat" color="blue" size="small">{{ item }}</v-chip>
           </v-card-subtitle>
-          <v-card-text>
+          <v-card-text  class="recepie-text">
             <p>פורסם ב{{ new Date(recepie.datePublished) }} על ידי {{ recepie.author.name }}</p>
             <p v-if="recepie.credit">קרדיט {{ recepie.credit.name }}<a :href="recepie.credit.href" target="_blank">{{ recepie.credit.href }}</a> <br/></p>
-            
+            <br/>
             <template v-for="line,n in recepie.description" :key="n">
               <p>{{ line }}</p>
             </template>
@@ -58,6 +58,10 @@ const recepie = computed(() => {return recepies.value.find(x=>x.id==route.params
 <style>
 h1 {
   font-family: 'Amatic SC', sans-serif;
+  font-size: 3em;
+}
+.recepie-text {
+  font-family: 'Open Sans', sans-serif;
 }
 .v-card-title {
     font-family: miri;

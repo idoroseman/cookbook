@@ -34,6 +34,7 @@
 
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Amatic+SC&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500&display=swap');
 
 @font-face {
     font-family: miri;
