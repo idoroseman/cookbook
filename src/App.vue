@@ -17,10 +17,16 @@
   const loading = ref(true)
 
   onMounted(() => {
+    console.log('snapshot request');
     const recepiesColl = collection(db, 'users', 'pZGq9JUlCdNC2NqfZuIl', 'recepies')
-    const close = onSnapshot(recepiesColl, snapshot => {
+    const close = onSnapshot(recepiesColl, 
+    snapshot => {
+      console.log('snapshot data');
       loading.value = false
       recepies.value = snapshot.docs.map(doc => ({ id:doc.id, ...doc.data() }))
+    },
+    error =>{
+      console.log(error);
     })
     onUnmounted(close)
   })

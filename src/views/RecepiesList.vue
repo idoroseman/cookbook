@@ -27,7 +27,7 @@
               append-inner-icon="mdi-magnify"
               single-line
               hide-details
-              @click:append-inner="onClick"
+              @click:append-inner="()=>{}"
               clearable
               @click:clear="searchText=''"
             ></v-text-field>

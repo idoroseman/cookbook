@@ -137,9 +137,17 @@ const decodeRecepie = () => {
     rv.recipeInstructions = []
 
     // ingredients
-    const sec = { name:"מצרכים", items:[]}
+    var sec = { name:"מצרכים", items:[]}
 
     ingredients.value.split('\n').forEach(line=>{
+        if (line.trim()=='')
+          return
+        if (line.endsWith(":")) {
+            if (sec.items.length)
+                rv.recipeIngredients.push(sec)
+            sec = { name:line.substring(0,line.length-1), items:[]}
+            return
+        }
         // notes
         var nts = ''
         const x = line.match(/\(.*\)/)
@@ -199,7 +207,7 @@ const decodeRecepie = () => {
        rv.recipeIngredients.push(sec)
 
     rv.recipeInstructions = [{ name:'הכנה', items:instructions.value.split('\n').filter(x=>x!='').map(x=>({ text:x }))}]
-
+    console.log(rv)
     const recepiesColl = collection(db, 'users', 'pZGq9JUlCdNC2NqfZuIl', 'recepies')
     addDoc(recepiesColl, rv)
     .then(docRef => {
