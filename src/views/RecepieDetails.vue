@@ -23,7 +23,7 @@
             <template v-for="section,n in recepie.recipeIngredients" :key="n">
               <p class="font-weight-bold">{{ section.name }}</p>
               <ul>
-                <li v-for="item, i in section.items" :key="i">{{ item.quantity }} {{ item.unit }} {{ item.name }} {{  item.prep }}</li>
+                <li v-for="item, i in section.items" :key="i">{{ item.quantity }} {{ item.unit }} {{ item.name }} {{  item.prepare }}</li>
               </ul>
             </template>
             <br/>
