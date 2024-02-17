@@ -49,6 +49,7 @@
               <v-icon :icon="getIconName(recepie)" color="primary"></v-icon>
             </template>
             <v-card-text>
+              <div >{{ recepie.credit?.name || "&nbsp;"}}</div>
               <v-chip v-for="item in recepie.keywords" :key="item" variant="flat" color="blue">{{ item }}</v-chip>
             </v-card-text>
           </v-card>
@@ -76,6 +77,8 @@
           (item.keywords.some(d=>d==searchText.value))
           ||
           (item.recipeIngredients && item.recipeIngredients.some(section=>section.items.some(d=>d.name==searchText.value)))
+          ||
+          (item.credit?.name && item.credit.name.includes(searchText.value))
         )
   })
 
