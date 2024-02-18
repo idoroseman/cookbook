@@ -206,7 +206,23 @@ const decodeRecepie = () => {
     if (sec.items.length)
        rv.recipeIngredients.push(sec)
 
-    rv.recipeInstructions = [{ name:'הכנה', items:instructions.value.split('\n').filter(x=>x!='').map(x=>({ text:x }))}]
+    // instructions
+    sec = { name:"הכנה", items:[]}
+    instructions.value.split('\n').filter(x=>x!='').forEach(line=>{
+        if (line.trim()=='')
+        return
+        if (line.endsWith(":")) {
+            if (sec.items.length)
+                rv.recipeInstructions.push(sec)
+            sec = { name:line.substring(0,line.length-1), items:[]}
+            return
+        }
+        sec.items.push({text:line});
+    })
+    if (sec.items.length)
+       rv.recipeInstructions.push(sec)
+    // rv.recipeInstructions = [{ name:'הכנה', items:instructions.value.split('\n').filter(x=>x!='').map(x=>({ text:x }))}]
+    
     console.log(rv)
     const recepiesColl = collection(db, 'users', 'pZGq9JUlCdNC2NqfZuIl', 'recepies')
     addDoc(recepiesColl, rv)
