@@ -56,7 +56,9 @@
         </v-col>
       </template>
     </v-row>
-    <p>מציג {{ filteredList.length }} מתוך {{ recepies.length }} מתכונים</p>
+    <p v-if="loading">טוען נתונים</p>
+    <p v-else-if="recepies.length == 0">תקלה בטעינת נתונים <a :onclick="reload()">נסה שוב</a></p>
+    <p v-else>מציג {{ filteredList.length }} מתוך {{ recepies.length }} מתכונים</p>
   </v-container>
 </template>
 
@@ -96,6 +98,9 @@
     return "mdi-food-fork-drink"
   }
 
+  const reload = ()=>{
+    console.log("reload!!!")
+  }
 
 </script>
 
