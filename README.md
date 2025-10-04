@@ -25,4 +25,5 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 
 
 ### deploy
+npm run build
 firebase deploy
