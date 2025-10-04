@@ -14,7 +14,7 @@
           </v-card-subtitle>
           <v-card-text  class="recepie-text">
             <p>פורסם ב{{ new Date(recepie.datePublished) }} על ידי {{ recepie.author.name }}</p>
-            <p v-if="recepie.credit">מקור {{ recepie.credit.name }}<a :href="recepie.credit.href" target="_blank">{{ recepie.credit.href }}</a> <br/></p>
+            <p v-if="recepie.credit">מקור {{ recepie.credit.href ? "" : recepie.credit.name }}<a :href="recepie.credit.href" target="_blank">{{ recepie.credit.name ? recepie.credit.name :recepie.credit.href }}</a> <br/></p>
             <br/>
             <template v-for="line,n in recepie.description" :key="n">
               <p>{{ line }}</p>
