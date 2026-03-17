@@ -13,7 +13,7 @@
             <v-chip v-for="item in recepie.keywords" :key="item" variant="flat" color="blue" size="small">{{ item }}</v-chip>
           </v-card-subtitle>
           <v-card-text  class="recepie-text">
-            <p>פורסם ב{{ new Date(recepie.datePublished) }} על ידי {{ recepie.author.name }}</p>
+            <p>פורסם ב{{ recepie.datePublished ? new Date(recepie.datePublished.toDate?.() || recepie.datePublished).toLocaleDateString('he-IL') : 'לא הוגדר' }} על ידי {{ recepie.author.name }}</p>
             <p v-if="recepie.credit">מקור {{ recepie.credit.href ? "" : recepie.credit.name }}<a :href="recepie.credit.href" target="_blank">{{ recepie.credit.name ? recepie.credit.name :recepie.credit.href }}</a> <br/></p>
             <br/>
             <template v-for="line,n in recepie.description" :key="n">

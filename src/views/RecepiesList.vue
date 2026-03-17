@@ -1,7 +1,12 @@
 <template>
   <v-container>
     <nav>
+      <span>שלום {{ userMetaData?.name || "אורח" }}</span>
+      <span> | </span>
       <router-link :to="{name:'new'}">מתכון חדש</router-link>
+      <span> | </span>
+      <a v-if="currentUser" href="#" @click.prevent="logout">התנתק</a>
+      <a v-else href="#" @click.prevent="login">התחבר</a>
     </nav>
     <v-row class="text-center">
 
@@ -57,17 +62,38 @@
       </template>
     </v-row>
     <p v-if="loading">טוען נתונים</p>
-    <p v-else-if="recepies.length == 0">תקלה בטעינת נתונים <a :onclick="reload()">נסה שוב</a></p>
+    <p v-else-if="recepies.length == 0">תקלה בטעינת נתונים <a href="#" @click.prevent="reload">נסה שוב</a></p>
     <p v-else>מציג {{ filteredList.length }} מתוך {{ recepies.length }} מתכונים</p>
   </v-container>
 </template>
 
 <script setup>
   import { computed , ref, inject } from 'vue'
+  import { signOut } from 'firebase/auth'
+  import { auth } from '@/firebase'
+  import { useRouter } from 'vue-router'
 
+  const router = useRouter()
   const loading = inject('loading')
   const recepies = inject('recepies')
   const keywords = inject('keywords')
+  const reload = inject('reload')
+  const currentUser = inject('currentUser')
+  const userMetaData = inject('userMetaData')
+
+  const logout = async () => {
+    try {
+      await signOut(auth)
+      console.log('User logged out')
+      router.push({ name: 'login' })
+    } catch (error) {
+      console.error('Error logging out:', error)
+    }
+  }
+
+  const login = () => {
+    router.push({ name: 'login' })
+  }
 
   const searchText = ref("")
 
@@ -98,9 +124,6 @@
     return "mdi-food-fork-drink"
   }
 
-  const reload = ()=>{
-    console.log("reload!!!")
-  }
 
 </script>
 

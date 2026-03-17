@@ -81,10 +81,11 @@ import { onMounted } from 'vue';
 <script setup>
 import {ref, inject, computed} from 'vue'
 import { db } from '@/firebase'
-import { addDoc, collection } from 'firebase/firestore';
+import { addDoc, collection, serverTimestamp } from 'firebase/firestore';
 import { useRouter } from 'vue-router'
 
 const router = useRouter();  
+const currentUser = inject('currentUser')  
 
 const name = ref('')
 const credit = ref('')
@@ -98,6 +99,7 @@ const debug = ref(null)
 const loading = inject('loading')
 const recepies = inject('recepies')
 const keywordsValues = inject('keywords')
+const userMetaData = inject('userMetaData')
 
 const unitValues = computed(()=>{ 
     // i'm sure i can map-reduce it, but i'm lazy
@@ -125,8 +127,8 @@ const materialValues = computed(()=>{
 
 const decodeRecepie = () => {
     const rv = {}
-    rv.author = { 'name': 'עדו' }
-    rv.datePublished = new Date()
+    rv.author = { 'name': userMetaData?.name || "אורח"  }
+    rv.datePublished = serverTimestamp()
     rv.lang = 'he'
     rv.name = name.value
     rv.credit = credit.value.startsWith("http") ? { 'href': credit.value } : { 'name': credit.value }
@@ -224,7 +226,7 @@ const decodeRecepie = () => {
     // rv.recipeInstructions = [{ name:'הכנה', items:instructions.value.split('\n').filter(x=>x!='').map(x=>({ text:x }))}]
     
     console.log(rv)
-    const recepiesColl = collection(db, 'users', 'pZGq9JUlCdNC2NqfZuIl', 'recepies')
+    const recepiesColl = collection(db, 'users', currentUser.value.uid, 'recepies')
     addDoc(recepiesColl, rv)
     .then(docRef => {
         console.log("Document has been added successfully", docRef);

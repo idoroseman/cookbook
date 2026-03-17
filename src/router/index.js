@@ -2,8 +2,14 @@ import { createRouter, createWebHistory } from 'vue-router'
 import RecepiesListVue from '@/views/RecepiesList.vue'
 import RecepieDetails from '@/views/RecepieDetails.vue'
 import RecepiesCreate from '@/views/RecepiesCreate.vue'
+import LoginView from '@/views/LoginView.vue'
 
 const routes = [
+  {
+    path: '/login',
+    name: 'login',
+    component: LoginView
+  },
   {
     path: '/',
     name: 'home',
